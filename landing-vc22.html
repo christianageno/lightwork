@@ -58,21 +58,7 @@
     font-family:var(--display); font-size:var(--t-micro); letter-spacing:.22em;
     text-transform:uppercase; color:var(--accent); font-weight:700; z-index:60;
     text-shadow:0 0 22px rgba(63,214,180,.55); mix-blend-mode:screen;
-    display:flex; align-items:center; gap:.55em; white-space:nowrap;
   }
-  /* The Lift mark beside the name. NO dark tile here: .brand carries
-     mix-blend-mode:screen, which erases a near-black fill against the dark page,
-     so the tile would vanish anyway and only add weight at other blend contexts.
-     The shadow bar is the whole point — it is what makes the sheet float. */
-  .brand svg{height:1.35em; width:auto; display:block; flex:none; overflow:visible}
-  .brand .mark-sheet{fill:var(--accent)}
-  .brand .mark-shadow{fill:var(--muted)}
-  /* the same lockup closes the page; footer already carries its own muted colour,
-     so the mark inherits it rather than restating a grey */
-  footer{display:flex; align-items:center; justify-content:center; gap:.55em}
-  footer svg{height:1.35em; width:auto; display:block; flex:none; overflow:visible}
-  footer .mark-sheet{fill:var(--accent)}
-  footer .mark-shadow{fill:var(--muted)}
   /* ================= HERO ================= */
   #hero{
     min-height:100vh;
@@ -315,12 +301,8 @@
   footer{
     position:absolute; bottom:2.2rem; left:0; right:0;
     text-align:center; color:var(--muted); font-size:var(--t-micro);
-    font-family:var(--display); letter-spacing:.18em; text-transform:uppercase;
+    font-family:var(--display); letter-spacing:.18em; text-transform:uppercase; opacity:.6;
   }
-  /* the .6 fade sits on the WORD, not on the whole footer. As a parent opacity it
-     also faded the mark, dropping its shadow to 2.86 contrast — under the 4.5 bar,
-     the same way the first favicon failed. The mark keeps full strength here. */
-  footer span{opacity:.6}
   @media (prefers-reduced-motion: reduce){
     *{animation:none!important; transition-duration:.01s!important}
     .js .reveal,.js .sub,.js h1,.js .stage{opacity:1!important; transform:none!important}
@@ -337,7 +319,7 @@
 </head>
 <body>
 <div class="topveil"></div>
-<div class="brand"><svg viewBox="7.5 3 17 25" aria-hidden="true"><rect class="mark-sheet" x="9" y="4.5" width="14" height="10.5" rx="2" transform="rotate(-8 16 9.75)"/><rect class="mark-shadow" x="9.5" y="22" width="13" height="4.5" rx="2.25"/></svg><span>Lightwork&nbsp;AI</span></div>
+<div class="brand">Lightwork&nbsp;AI</div>
 
 <!-- ============ HERO ============ -->
 <section id="hero">
@@ -515,7 +497,7 @@
   <h2 class="reveal" style="margin-bottom:2rem">More business. Less busywork.</h2>
   <a class="cta reveal" href="mailto:christianageno@gmail.com">Let's talk</a>
   <p class="email reveal"><a href="mailto:christianageno@gmail.com">christianageno@gmail.com</a></p>
-  <footer><svg viewBox="7.5 3 17 25" aria-hidden="true"><rect class="mark-sheet" x="9" y="4.5" width="14" height="10.5" rx="2" transform="rotate(-8 16 9.75)"/><rect class="mark-shadow" x="9.5" y="22" width="13" height="4.5" rx="2.25"/></svg><span>Lightwork AI</span></footer>
+  <footer>Lightwork AI</footer>
 </section>
 
 <script>
