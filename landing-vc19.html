@@ -62,23 +62,14 @@
     min-height:100vh;
     background:radial-gradient(ellipse 70% 50% at 50% 30%, rgba(63,214,180,.07), transparent 65%);
   }
-  /* The mess owns the CENTRE of the screen, then gives that space to the headline.
-     --lift is the distance from the stage's resting place (above the text) down to
-     the exact middle of the window; JS measures it per viewport. The stage holds
-     there through the scatter, then rises home as the words arrive. */
-  .stage{position:relative; width:min(340px,86vw); height:264px; margin-bottom:2.6rem; --lift:0px}
-  .js .stage{animation:stageHome .95s cubic-bezier(.22,1,.36,1) 2.6s both}
-  @keyframes stageHome{
-    from{transform:translateY(var(--lift))}
-    to{transform:translateY(0)}
-  }
+  .stage{position:relative; width:min(340px,86vw); height:264px; margin-bottom:2.6rem}
   /* idle: the settled grid keeps breathing so the hero never freezes dead */
   .stage::after{
     content:''; position:absolute; left:50%; top:50%; width:300px; height:260px;
     margin:-130px 0 0 -150px; border-radius:50%; z-index:-1; opacity:0;
     background:radial-gradient(ellipse, rgba(63,214,180,.15), transparent 68%);
   }
-  .js .stage::after{animation:stackGlow 5.5s ease-in-out 3.6s infinite}
+  .js .stage::after{animation:stackGlow 5.5s ease-in-out 3.9s infinite}
   @keyframes stackGlow{0%,100%{opacity:.45; transform:scale(.94)} 50%{opacity:1; transform:scale(1.07)}}
   /* nine DIFFERENT things a desk collects, scattered in chaos, snapping into a
      clean aligned grid — a grid reads as "organized"; a pile is just tidier mess */
@@ -140,14 +131,14 @@
     color:var(--muted); font-size:var(--t-body); line-height:1.65; text-align:center;
     max-width:29rem;
   }
-  .js h1{animation:rise 1s cubic-bezier(.22,1,.36,1) 3.25s both}
-  .js .sub{animation:fadein 1s ease 3.65s both}
+  .js h1{animation:rise 1s cubic-bezier(.22,1,.36,1) 3.1s both}
+  .js .sub{animation:fadein 1s ease 3.5s both}
   @keyframes rise{from{opacity:0; transform:translateY(16px)} to{opacity:1; transform:none}}
   @keyframes fadein{from{opacity:0} to{opacity:1}}
   .scroll-hint{
     position:absolute; bottom:2.2rem; color:var(--muted); font-size:1.3rem;
   }
-  .js .scroll-hint{animation:fadein 1s ease 4.35s both, bob 2.2s ease-in-out 4.35s infinite}
+  .js .scroll-hint{animation:fadein 1s ease 4.2s both, bob 2.2s ease-in-out 4.2s infinite}
   @keyframes bob{0%,100%{transform:translateY(0)} 50%{transform:translateY(9px)}}
   /* ================= shared ================= */
   .kicker{
@@ -303,7 +294,7 @@
   }
   @media (prefers-reduced-motion: reduce){
     *{animation:none!important; transition-duration:.01s!important}
-    .js .reveal,.js .sub,.js h1,.js .stage{opacity:1!important; transform:none!important}
+    .js .reveal,.js .sub,.js h1{opacity:1!important; transform:none!important}
     .stage{display:none}
     .js .row{opacity:1!important; transform:none!important}
     .js .row .clean,.js .row .tick{opacity:1!important}
@@ -502,6 +493,12 @@
   // Sections replay every time they come back into view. Two thresholds give it
   // hysteresis: it starts at 40% visible and only resets once fully gone, so a
   // section sitting near the edge of the screen cannot flicker.
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){
+    if(e.intersectionRatio>=.4) e.target.classList.add('inview');
+    else if(e.intersectionRatio===0) e.target.classList.remove('inview');
+  })},{threshold:[0,.4]});
+  document.querySelectorAll('section').forEach(function(s){io.observe(s)});
+
   // The scan runs as a continuous queue: handled work files away, new work arrives.
   // It only runs while on screen — no animation burning battery out of sight.
   var svg=document.getElementById('scanSvg'), timers=[], running=false;
@@ -520,72 +517,11 @@
     at(7000,function(){svg.classList.add('clearing')});
     at(8200,scanCycle);
   }
-  // WHAT IS ON SCREEN — measured from geometry on every scroll frame, not from
-  // IntersectionObserver threshold crossings. Measured 2026-08-09: with mandatory
-  // snap the page jumps whole screens at once, and the observer misses crossings —
-  // section 04 sat 100% on screen still marked off-screen (so its animation never
-  // replayed) while the hero stayed marked on-screen at 0%. Recomputing from the
-  // real rectangle cannot go stale, because it never relies on catching an event.
-  // Centre the opening mess on the screen. The stage's resting place is ABOVE the
-  // headline, so left alone the scatter reads top-heavy. Measuring the gap down to
-  // the true middle of the window lets the mess own the centre, then rise home and
-  // hand that space to the words. Re-measured on resize and once fonts land, since
-  // both change how tall the headline is.
-  var stageEl=document.querySelector('.stage');
-  function setLift(){
-    if(!stageEl) return;
-    if(window.scrollY>10) return;          // only meaningful with the hero at rest
-    // Two passes: zero the lift, read where the stage ACTUALLY rests, then set the
-    // gap down to the middle of the window. Reading the real rectangle avoids
-    // offsetTop, whose origin (border edge vs padding edge) differs by engine —
-    // that assumption left the phone 19px high.
-    stageEl.style.setProperty('--lift','0px');
-    var r=stageEl.getBoundingClientRect();
-    var lift=(window.innerHeight/2)-(r.top+r.height/2);
-    stageEl.style.setProperty('--lift', Math.max(0,Math.round(lift))+'px');
-  }
-  // Measure again whenever the layout could have changed — a resize needs a frame
-  // to settle before the numbers are true, and the webfont landing changes how
-  // tall the headline is, which moves the stage's resting place.
-  function remeasure(){ requestAnimationFrame(setLift); }
-  setLift();
-  window.addEventListener('resize', remeasure);
-  window.addEventListener('orientationchange', remeasure);
-  window.addEventListener('load', remeasure);
-  if(document.fonts&&document.fonts.ready) document.fonts.ready.then(remeasure);
-
-  var SECTIONS=Array.prototype.slice.call(document.querySelectorAll('section'));
-  var scanScene=document.getElementById('scanScene');
-  var pending=false;
-  function visFrac(el){
-    var r=el.getBoundingClientRect();
-    if(!r.height) return 0;
-    return Math.max(0, Math.min(r.bottom, window.innerHeight) - Math.max(r.top, 0)) / r.height;
-  }
-  function sync(){
-    for(var i=0;i<SECTIONS.length;i++){
-      var f=visFrac(SECTIONS[i]);
-      if(f>=.4) SECTIONS[i].classList.add('inview');        // hysteresis: enter at 40%…
-      else if(f<.15) SECTIONS[i].classList.remove('inview'); // …leave only below 15%
-    }
-    var s=visFrac(scanScene);
-    if(s>=.5){ if(!running){running=true; scanCycle();} }
-    else if(s<.2){ if(running) stopScan(); }
-  }
-  // One sync per painted frame. The flag is cleared INSIDE the frame callback —
-  // if the tab is hidden mid-scroll that callback never runs, and clearing it in
-  // sync() instead would leave the flag stuck true, so every later scroll would be
-  // ignored and the page would stay frozen after the tab came back.
-  function schedule(){
-    if(pending) return;
-    pending=true;
-    requestAnimationFrame(function(){ pending=false; sync(); });
-  }
-  window.addEventListener('scroll', schedule, {passive:true});
-  window.addEventListener('resize', schedule, {passive:true});
-  // returning to a hidden tab: clear any stuck flag and re-read the page immediately
-  document.addEventListener('visibilitychange', function(){ pending=false; sync(); });
-  sync();
+  var scanIO=new IntersectionObserver(function(es){es.forEach(function(e){
+    if(e.isIntersecting){ if(!running){running=true; scanCycle();} }
+    else stopScan();
+  })},{threshold:.5});
+  scanIO.observe(document.getElementById('scanScene'));
 </script>
 </body>
 </html>
