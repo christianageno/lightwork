@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lightwork AI</title>
+<style>
+  :root{
+    --bg:#fafaf8; --ink:#1c1c1c; --muted:#5b5b56; --accent:#0e6e5c; --line:#e6e4de;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#141513; --ink:#ececea; --muted:#a3a39c; --accent:#4fbfa5; --line:#2a2b28; }
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{
+    background:var(--bg); color:var(--ink);
+    font-family:Georgia,'Times New Roman',serif;
+    display:flex; min-height:100vh; align-items:center; justify-content:center;
+    padding:2rem 1.5rem;
+  }
+  main{max-width:34rem; width:100%}
+  .name{
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+    font-size:1.05rem; letter-spacing:.18em; text-transform:uppercase;
+    color:var(--accent); font-weight:600; margin-bottom:1.4rem;
+  }
+  h1{font-size:clamp(1.7rem,5vw,2.4rem); font-weight:400; line-height:1.25; margin-bottom:2.2rem}
+  ul{list-style:none; border-top:1px solid var(--line); margin-bottom:2.2rem}
+  li{
+    padding:1.05rem 0; border-bottom:1px solid var(--line);
+    font-size:1.05rem; line-height:1.5; color:var(--muted);
+  }
+  li strong{color:var(--ink); font-weight:600;
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+    font-size:.95rem; display:block; margin-bottom:.15rem; letter-spacing:.02em}
+  .contact{
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+    font-size:.95rem; color:var(--muted);
+  }
+  .contact a{color:var(--accent); text-decoration:none; border-bottom:1px solid var(--accent)}
+</style>
+</head>
+<body>
+<main>
+  <div class="name">Lightwork&nbsp;AI</div>
+  <h1>AI makes work simpler.<br>We make AI simple for you.</h1>
+  <ul>
+    <li><strong>The repetitive work, off your desk</strong>
+        Paperwork, follow-ups, data entry — the tasks that eat your day are the tasks AI does best.</li>
+    <li><strong>Your process, only faster</strong>
+        Nothing gets replaced. What you already do gets simpler, quicker, and harder to drop.</li>
+    <li><strong>See it working before you commit</strong>
+        We start small, on one real task of yours. You watch it work, then decide.</li>
+  </ul>
+  <p class="contact">Let's talk — <a href="mailto:christianageno@gmail.com">christianageno@gmail.com</a></p>
+</main>
+</body>
+</html>

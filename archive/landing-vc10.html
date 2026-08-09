@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lightwork AI — AI makes work simpler</title>
+<meta name="description" content="A consultancy for businesses that want the advantage of AI without becoming technologists.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230a0b0b'/%3E%3Cpath d='M17.5 5 L9 18h6l-1.5 9L22 14h-6z' fill='%233fd6b4'/%3E%3C/svg%3E">
+<!-- marks that scripting is alive; every hiding rule below is gated on it, so a
+     failed/blocked script leaves the page fully readable instead of blank -->
+<script>document.documentElement.className+=' js';</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#080909; --panel:#0f1211; --ink:#f4f4f1; --muted:#8b908c;
+    --accent:#3fd6b4; --accent-soft:rgba(63,214,180,.16); --line:#1c211f;
+    --display:'Space Grotesk',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    --body:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,sans-serif;
+    /* one type scale — no near-duplicate sizes */
+    --t-micro:.72rem;   /* 11.5 — brand + section numbers */
+    --t-small:.875rem;  /* 14   — replay, email */
+    --t-body:1.0625rem; /* 17   — every paragraph */
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg); color:var(--ink); font-family:var(--body);
+    -webkit-font-smoothing:antialiased; overflow-x:hidden; position:relative;
+  }
+  body::after{
+    content:''; position:fixed; inset:0; pointer-events:none; z-index:50; opacity:.035;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  section{
+    min-height:68vh; display:flex; flex-direction:column;
+    align-items:center; justify-content:center;
+    padding:4.5rem 1.5rem; position:relative;
+  }
+  .topveil{
+    position:fixed; top:0; left:0; right:0; height:4.6rem; z-index:55; pointer-events:none;
+    background:linear-gradient(to bottom, var(--bg) 45%, rgba(8,9,9,.82) 68%, rgba(8,9,9,0) 100%);
+  }
+  .brand{
+    position:fixed; top:1.3rem; left:50%; transform:translateX(-50%);
+    font-family:var(--display); font-size:var(--t-micro); letter-spacing:.22em;
+    text-transform:uppercase; color:var(--accent); font-weight:700; z-index:60;
+    text-shadow:0 0 22px rgba(63,214,180,.55); mix-blend-mode:screen;
+  }
+  /* ================= HERO ================= */
+  #hero{
+    min-height:100vh;
+    background:radial-gradient(ellipse 70% 50% at 50% 30%, rgba(63,214,180,.07), transparent 65%);
+  }
+  .stage{position:relative; width:min(320px,80vw); height:250px; margin-bottom:2.6rem}
+  .doc{
+    position:absolute; width:54px; height:68px; left:50%; top:50%; margin:-34px 0 0 -27px;
+    transform:var(--from);
+    filter:drop-shadow(0 10px 22px rgba(0,0,0,.65));
+  }
+  .doc svg{width:100%;height:100%}
+  /* the settle runs off a CSS timer — no JavaScript involved */
+  .js .doc{animation:settle 1.7s cubic-bezier(.22,1,.36,1) .8s both}
+  @keyframes settle{
+    from{transform:var(--from); filter:drop-shadow(0 10px 22px rgba(0,0,0,.65))}
+    to{transform:var(--to); filter:drop-shadow(0 0 26px rgba(63,214,180,.4)) drop-shadow(0 14px 26px rgba(0,0,0,.7))}
+  }
+  .doc:nth-child(1){--from:translate(-135px,-72px) rotate(-24deg); --to:translate(0,12px) rotate(-2deg)}
+  .doc:nth-child(2){--from:translate(115px,-88px) rotate(31deg);   --to:translate(0,5px) rotate(1.5deg)}
+  .doc:nth-child(3){--from:translate(-98px,58px) rotate(14deg);    --to:translate(0,-2px) rotate(-1deg)}
+  .doc:nth-child(4){--from:translate(128px,48px) rotate(-19deg);   --to:translate(0,-9px) rotate(2deg)}
+  .doc:nth-child(5){--from:translate(-16px,-108px) rotate(8deg);   --to:translate(0,-16px) rotate(-1.5deg)}
+  .doc:nth-child(6){--from:translate(22px,88px) rotate(-9deg);     --to:translate(0,-23px) rotate(0deg)}
+  h1{
+    font-family:var(--display); font-size:clamp(2.1rem,6.6vw,3.6rem);
+    font-weight:300; line-height:1.1; letter-spacing:-.03em;
+    text-align:center; margin-bottom:1.1rem;
+  }
+  h1 em{
+    font-style:normal; font-weight:500;
+    background:linear-gradient(100deg,var(--accent) 0%,#8ef0d9 42%,var(--accent) 60%);
+    background-size:250% 100%;
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    animation:gleam 7s ease-in-out infinite 2.6s;
+  }
+  @keyframes gleam{0%,100%{background-position:180% 0} 50%{background-position:-40% 0}}
+  .sub{
+    color:var(--muted); font-size:var(--t-body); line-height:1.65; text-align:center;
+    max-width:29rem;
+  }
+  .js h1{animation:rise 1s cubic-bezier(.22,1,.36,1) 1.6s both}
+  .js .sub{animation:fadein 1s ease 2s both}
+  @keyframes rise{from{opacity:0; transform:translateY(16px)} to{opacity:1; transform:none}}
+  @keyframes fadein{from{opacity:0} to{opacity:1}}
+  .scroll-hint{
+    position:absolute; bottom:2.2rem; color:var(--muted); font-size:1.3rem;
+  }
+  .js .scroll-hint{animation:fadein 1s ease 2.8s both, bob 2.2s ease-in-out 2.8s infinite}
+  @keyframes bob{0%,100%{transform:translateY(0)} 50%{transform:translateY(9px)}}
+  /* ================= shared ================= */
+  .kicker{
+    font-family:var(--display); color:var(--accent); font-size:var(--t-micro); font-weight:700;
+    letter-spacing:.18em;
+    margin-bottom:.6rem;      /* TIGHT — the number labels the heading below it */
+  }
+  h2{
+    font-family:var(--display); font-size:clamp(1.6rem,4.8vw,2.3rem);
+    font-weight:500; letter-spacing:-.022em; text-align:center;
+    margin-bottom:1.4rem;     /* BREATH — the body text is a new beat */
+  }
+  .blurb{color:var(--muted); font-size:var(--t-body); line-height:1.65; max-width:28rem; text-align:center}
+  .scene{
+    width:min(360px,88vw); height:230px; margin-bottom:2.2rem; position:relative;
+    filter:drop-shadow(0 18px 30px rgba(0,0,0,.6));
+  }
+  /* soft glow pool behind each illustration — depth without a second brand colour */
+  .scene::before{
+    content:''; position:absolute; inset:-14% -8%; z-index:-1;
+    background:radial-gradient(ellipse 60% 55% at 50% 55%, rgba(63,214,180,.10), transparent 70%);
+  }
+  .scene svg{width:100%;height:100%;overflow:visible; transition:transform .55s cubic-bezier(.22,1,.36,1)}
+  .scene:hover svg{transform:scale(1.028)}
+  .reveal{}
+  .js .reveal{opacity:0; transform:translateY(26px); transition:opacity .9s ease, transform .9s cubic-bezier(.22,1,.36,1)}
+  .js .inview .reveal{opacity:1; transform:none}
+  /* ---- 01: desk clears, steam rises ---- */
+  .js .paper{transition:transform 1.15s cubic-bezier(.5,0,.75,.4), opacity 1.15s}
+  .js .inview .paper:nth-of-type(1){transform:translate(-155px,-135px) rotate(-40deg); opacity:0; transition-delay:.5s}
+  .js .inview .paper:nth-of-type(2){transform:translate(145px,-155px) rotate(35deg); opacity:0; transition-delay:.9s}
+  .js .inview .paper:nth-of-type(3){transform:translate(-115px,-175px) rotate(-25deg); opacity:0; transition-delay:1.3s}
+  .js .inview .paper:nth-of-type(4){transform:translate(165px,-115px) rotate(45deg); opacity:0; transition-delay:1.7s}
+  .js .cup{opacity:0; transform:translateY(-28px); transition:opacity .6s ease 2.3s, transform .7s cubic-bezier(.34,1.56,.64,1) 2.3s}
+  .js .inview .cup{opacity:1; transform:none}
+  .js .plant{opacity:0; transform:translateY(-24px); transition:opacity .6s ease 2.6s, transform .75s cubic-bezier(.34,1.56,.64,1) 2.6s}
+  .js .inview .plant{opacity:1; transform:none}
+  .js .contact-shadow{transition:opacity .7s ease 2.85s}
+  .js .inview .contact-shadow{opacity:.22}
+  .js .steam{opacity:0}
+  .js .inview .steam{animation:steam 3.4s ease-in-out 2.9s infinite}
+  .js .inview .steam.s2{animation-delay:3.9s}
+  @keyframes steam{
+    0%{opacity:0; transform:translateY(0) scaleX(1)}
+    25%{opacity:.55}
+    100%{opacity:0; transform:translateY(-26px) scaleX(1.45)}
+  }
+  /* ---- 02: bell catches the date ---- */
+  .js .date-chip{transition:transform 2.2s linear, opacity .5s}
+  .js .inview .date-chip.d1{transform:translateX(250px); opacity:0; transition-delay:.4s}
+  .js .inview .date-chip.d2{transform:translateX(250px); opacity:0; transition-delay:1s}
+  .js .inview .date-chip.d3{transform:translateX(150px); transition-delay:1.6s}
+  .bell{transform-origin:50% 12%; transition:transform .35s ease}
+  .js .inview .bell{animation:ring 1s ease 3s 2, breathe 4s ease-in-out 5.2s infinite}
+  #p2 .scene:hover .bell{animation:none; transform:rotate(-7deg)}
+  .js .ping{opacity:0}
+  .js .inview .ping{animation:ping 1.3s ease 3.1s 2}
+  @keyframes ring{0%,100%{transform:rotate(0)} 20%{transform:rotate(15deg)} 45%{transform:rotate(-12deg)} 70%{transform:rotate(7deg)}}
+  @keyframes breathe{0%,100%{transform:rotate(0) scale(1)} 50%{transform:rotate(0) scale(1.035)}}
+  @keyframes ping{0%{opacity:.75; transform:scale(.55)} 100%{opacity:0; transform:scale(1.6)}}
+  /* ---- 03: the scan ---- */
+  #scanScene{height:250px; width:min(400px,92vw); margin-bottom:.4rem}
+  .beam{opacity:0}
+  .playing .beam{animation:beam 3.6s cubic-bezier(.45,0,.55,1) .3s forwards}
+  @keyframes beam{
+    0%{opacity:0; transform:translateY(-6px)}
+    8%{opacity:1}
+    88%{opacity:1; transform:translateY(178px)}
+    100%{opacity:0; transform:translateY(186px)}
+  }
+  .js .scrawl{transition:transform .75s cubic-bezier(.22,1,.36,1), opacity .5s}
+  .js .r1 .scrawl{transform:translate(-14px,5px) rotate(-6deg)}
+  .js .r2 .scrawl{transform:translate(22px,-4px) rotate(7deg)}
+  .js .r3 .scrawl{transform:translate(-20px,6px) rotate(4deg)}
+  .js .r4 .scrawl{transform:translate(16px,-7px) rotate(-8deg)}
+  .js .row .clean{opacity:0; transition:opacity .5s ease}
+  .js .row .tick{opacity:0; transform:scale(.3); transform-box:fill-box; transform-origin:center;
+             transition:opacity .35s ease, transform .45s cubic-bezier(.34,1.56,.64,1)}
+  .playing .r1 .scrawl{transform:none; transition-delay:.75s}
+  .playing .r2 .scrawl{transform:none; transition-delay:1.45s}
+  .playing .r3 .scrawl{transform:none; transition-delay:2.15s}
+  .playing .r4 .scrawl{transform:none; transition-delay:2.85s}
+  .playing .r1 .clean,.playing .r1 .tick{opacity:1; transform:none; transition-delay:1.05s}
+  .playing .r2 .clean,.playing .r2 .tick{opacity:1; transform:none; transition-delay:1.75s}
+  .playing .r3 .clean,.playing .r3 .tick{opacity:1; transform:none; transition-delay:2.45s}
+  .playing .r4 .clean,.playing .r4 .tick{opacity:1; transform:none; transition-delay:3.15s}
+  .done-glow{opacity:0}
+  .playing .done-glow{animation:doneGlow 1.6s ease 3.5s}
+  @keyframes doneGlow{0%{opacity:0} 30%{opacity:.5} 100%{opacity:0}}
+  .replay{
+    background:none; border:none; cursor:pointer; font-family:var(--body);
+    color:var(--muted); font-size:var(--t-small); letter-spacing:.08em;
+    transition:color .25s;
+  }
+  .replay:hover{color:var(--accent)}
+  .js .replay{opacity:0; transition:opacity .6s ease, color .25s}
+  .js .replay.show{opacity:.75}
+  /* ---- contact ---- */
+  #contact{min-height:44vh; padding-top:3.5rem; padding-bottom:3.5rem}
+  .cta{
+    font-family:var(--display); display:inline-block; color:#04110d;
+    background:linear-gradient(135deg,#57e6c6 0%,var(--accent) 55%,#2fc0a0 100%);
+    text-decoration:none; font-weight:700; font-size:var(--t-body); letter-spacing:.01em;
+    padding:1.05rem 2.4rem; border-radius:999px;
+    border:1px solid rgba(255,255,255,.14);
+    box-shadow:0 10px 34px rgba(63,214,180,.28);
+    animation:pulse 3s ease-in-out 3;   /* settles after three — no endless throb */
+    transition:box-shadow .3s ease, transform .3s cubic-bezier(.34,1.56,.64,1), filter .3s;
+  }
+  .cta:hover{
+    transform:translateY(-3px) scale(1.025); filter:brightness(1.06);
+    box-shadow:0 16px 46px rgba(63,214,180,.5);
+  }
+  @keyframes pulse{0%,100%{box-shadow:0 10px 34px rgba(63,214,180,.28),0 0 0 0 rgba(63,214,180,.4)}
+                   55%{box-shadow:0 10px 34px rgba(63,214,180,.28),0 0 0 18px rgba(63,214,180,0)}}
+  .email{margin-top:1.3rem; color:var(--muted); font-size:var(--t-small)}
+  .email a{color:var(--accent); text-decoration:none; border-bottom:1px solid rgba(63,214,180,.35)}
+  footer{
+    padding:2.5rem; text-align:center; color:var(--muted); font-size:var(--t-micro);
+    font-family:var(--display); letter-spacing:.18em; text-transform:uppercase; opacity:.75;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none!important; transition-duration:.01s!important}
+    .js .reveal,.js .sub,.js h1,.js .replay{opacity:1!important; transform:none!important}
+    .stage{display:none}
+    .js .row .clean,.js .row .tick{opacity:1!important}
+    .js .scrawl{transform:none!important}
+    .js .cup,.js .plant{opacity:1!important; transform:none!important}
+    .js .contact-shadow{opacity:.22!important}
+  }
+</style>
+</head>
+<body>
+<div class="topveil"></div>
+<div class="brand">Lightwork&nbsp;AI</div>
+
+<!-- ============ HERO ============ -->
+<section id="hero">
+  <div class="stage">
+    <div class="doc"><svg viewBox="0 0 54 68"><rect x="1.5" y="1.5" width="51" height="65" rx="7" fill="#141817" stroke="#3fd6b4" stroke-width="2"/><line x1="13" y1="19" x2="41" y2="19" stroke="#8b908c" stroke-width="2.5" stroke-linecap="round"/><line x1="13" y1="31" x2="41" y2="31" stroke="#8b908c" stroke-width="2.5" stroke-linecap="round"/><line x1="13" y1="43" x2="31" y2="43" stroke="#8b908c" stroke-width="2.5" stroke-linecap="round"/></svg></div>
+    <div class="doc"><svg viewBox="0 0 54 68"><rect x="1.5" y="1.5" width="51" height="65" rx="7" fill="#141817" stroke="#3fd6b4" stroke-width="2"/><line x1="13" y1="19" x2="41" y2="19" stroke="#8b908c" stroke-width="2.5" stroke-linecap="round"/><line x1="13" y1="31" x2="35" y2="31" stroke="#8b908c" stroke-width="2.5" stroke-linecap="round"/><line x1="13" y1="43" x2="41" y2="43" stroke="#8b908c" stroke-width="2.5" stroke-linecap="round"/></svg></div>
+    <div class="doc"><svg viewBox="0 0 54 68"><rect x="1.5" y="1.5" width="51" height="65" rx="7" fill="#141817" stroke="#3fd6b4" stroke-width="2"/><line x1="13" y1="19" x2="37" y2="19" stroke="#8b908c" stroke-width="2.5" stroke-linecap="round"/><line x1="13" y1="31" x2="41" y2="31" stroke="#8b908c" stroke-width="2.5" stroke-linecap="round"/><line x1="13" y1="43" x2="27" y2="43" stroke="#8b908c" stroke-width="2.5" stroke-linecap="round"/></svg></div>
+    <div class="doc"><svg viewBox="0 0 54 68"><rect x="1.5" y="1.5" width="51" height="65" rx="7" fill="#141817" stroke="#3fd6b4" stroke-width="2"/><line x1="13" y1="19" x2="41" y2="19" stroke="#8b908c" stroke-width="2.5" stroke-linecap="round"/><line x1="13" y1="31" x2="29" y2="31" stroke="#8b908c" stroke-width="2.5" stroke-linecap="round"/><line x1="13" y1="43" x2="39" y2="43" stroke="#8b908c" stroke-width="2.5" stroke-linecap="round"/></svg></div>
+    <div class="doc"><svg viewBox="0 0 54 68"><rect x="1.5" y="1.5" width="51" height="65" rx="7" fill="#141817" stroke="#3fd6b4" stroke-width="2"/><line x1="13" y1="19" x2="33" y2="19" stroke="#8b908c" stroke-width="2.5" stroke-linecap="round"/><line x1="13" y1="31" x2="41" y2="31" stroke="#8b908c" stroke-width="2.5" stroke-linecap="round"/><line x1="13" y1="43" x2="35" y2="43" stroke="#8b908c" stroke-width="2.5" stroke-linecap="round"/></svg></div>
+    <div class="doc"><svg viewBox="0 0 54 68"><rect x="1.5" y="1.5" width="51" height="65" rx="7" fill="#141817" stroke="#3fd6b4" stroke-width="2"/><line x1="13" y1="19" x2="41" y2="19" stroke="#8b908c" stroke-width="2.5" stroke-linecap="round"/><line x1="13" y1="31" x2="37" y2="31" stroke="#8b908c" stroke-width="2.5" stroke-linecap="round"/><line x1="13" y1="43" x2="41" y2="43" stroke="#8b908c" stroke-width="2.5" stroke-linecap="round"/></svg></div>
+  </div>
+  <h1>AI makes work simpler.<br><em>We make AI simple for you.</em></h1>
+  <p class="sub">A consultancy for businesses that want the advantage of AI without becoming technologists.</p>
+  <div class="scroll-hint">↓</div>
+</section>
+
+<!-- ============ 01 ============ -->
+<section class="promise" id="p1">
+  <div class="scene reveal">
+    <svg viewBox="0 0 360 230">
+      <!-- desk: solid slab with real thickness, legs at the ends, desk-like proportions -->
+      <rect x="58" y="158" width="244" height="13" rx="4" fill="#141817" stroke="#3fd6b4" stroke-width="2.5"/>
+      <rect x="74" y="171" width="10" height="50" rx="4" fill="#141817" stroke="#3fd6b4" stroke-width="2.5"/>
+      <rect x="276" y="171" width="10" height="50" rx="4" fill="#141817" stroke="#3fd6b4" stroke-width="2.5"/>
+
+      <!-- the pile, resting ON the desk -->
+      <g class="paper"><rect x="126" y="100" width="84" height="58" rx="5" transform="rotate(-6 168 129)" fill="#141817" stroke="#8b908c" stroke-width="2"/></g>
+      <g class="paper"><rect x="137" y="86" width="84" height="58" rx="5" transform="rotate(5 179 115)" fill="#141817" stroke="#8b908c" stroke-width="2"/></g>
+      <g class="paper"><rect x="123" y="72" width="84" height="58" rx="5" transform="rotate(-3 165 101)" fill="#141817" stroke="#8b908c" stroke-width="2"/></g>
+      <g class="paper"><rect x="135" y="58" width="84" height="58" rx="5" transform="rotate(4 177 87)" fill="#141817" stroke="#8b908c" stroke-width="2"/></g>
+
+      <!-- what lands instead: a calm desk, not an empty one -->
+      <ellipse class="contact-shadow" cx="136" cy="158" rx="21" ry="2.8" fill="#3fd6b4" opacity="0"/>
+      <ellipse class="contact-shadow" cx="243" cy="158" rx="19" ry="2.8" fill="#3fd6b4" opacity="0"/>
+
+      <g class="cup">
+        <path d="M118 126 h36 v24 a8 8 0 0 1 -8 8 h-20 a8 8 0 0 1 -8 -8 z" fill="#141817" stroke="#3fd6b4" stroke-width="2.5"/>
+        <path d="M154 132 h9 a7.5 7.5 0 0 1 0 15 h-9" fill="none" stroke="#3fd6b4" stroke-width="2.5"/>
+        <line x1="118" y1="134" x2="154" y2="134" stroke="#3fd6b4" stroke-width="1.6" opacity=".45"/>
+      </g>
+      <path class="steam s1" d="M128 122 q4 -8 0 -14 q-4 -7 0 -13" fill="none" stroke="#8b908c" stroke-width="2.2" stroke-linecap="round"/>
+      <path class="steam s2" d="M143 122 q4 -8 0 -14 q-4 -7 0 -13" fill="none" stroke="#8b908c" stroke-width="2.2" stroke-linecap="round"/>
+
+      <g class="plant">
+        <path d="M229 136 h29 l-4 22 h-21 z" fill="#141817" stroke="#3fd6b4" stroke-width="2.5" stroke-linejoin="round"/>
+        <line x1="226" y1="136" x2="261" y2="136" stroke="#3fd6b4" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="243" y1="136" x2="243" y2="108" stroke="#3fd6b4" stroke-width="2.2" stroke-linecap="round"/>
+        <path d="M243 118 c-11 -2 -18 -11 -19 -22 c12 1 18 10 19 22 z" fill="#141817" stroke="#3fd6b4" stroke-width="2.2" stroke-linejoin="round"/>
+        <path d="M243 124 c11 -3 17 -13 17 -24 c-12 2 -17 12 -17 24 z" fill="#141817" stroke="#3fd6b4" stroke-width="2.2" stroke-linejoin="round"/>
+      </g>
+    </svg>
+  </div>
+  <div class="kicker reveal">01</div>
+  <h2 class="reveal">The repetitive work, off your desk</h2>
+  <p class="blurb reveal">Paperwork, follow-ups, data entry — the tasks that eat your day are the tasks AI does best.</p>
+</section>
+
+<!-- ============ 02 ============ -->
+<section class="promise" id="p2">
+  <div class="scene reveal">
+    <svg viewBox="0 0 360 230">
+      <rect x="34" y="64" width="116" height="116" rx="11" fill="#141817" stroke="#3fd6b4" stroke-width="2.5"/>
+      <line x1="34" y1="95" x2="150" y2="95" stroke="#3fd6b4" stroke-width="2.5"/>
+      <line x1="61" y1="53" x2="61" y2="74" stroke="#3fd6b4" stroke-width="3" stroke-linecap="round"/>
+      <line x1="123" y1="53" x2="123" y2="74" stroke="#3fd6b4" stroke-width="3" stroke-linecap="round"/>
+      <g class="date-chip d1"><rect x="49" y="108" width="48" height="23" rx="6" fill="#080909" stroke="#8b908c" stroke-width="2"/><text x="73" y="124" fill="#8b908c" font-size="11.5" font-family="Inter,sans-serif" text-anchor="middle">MAR 3</text></g>
+      <g class="date-chip d2"><rect x="49" y="140" width="48" height="23" rx="6" fill="#080909" stroke="#8b908c" stroke-width="2"/><text x="73" y="156" fill="#8b908c" font-size="11.5" font-family="Inter,sans-serif" text-anchor="middle">APR 9</text></g>
+      <g class="date-chip d3"><rect x="49" y="76" width="52" height="23" rx="6" fill="#080909" stroke="#3fd6b4" stroke-width="2"/><text x="75" y="92" fill="#3fd6b4" font-size="11.5" font-weight="700" font-family="Inter,sans-serif" text-anchor="middle">DUE!</text></g>
+      <g class="bell">
+        <path d="M276 92 a27 27 0 0 1 27 27 v19 l10 12 h-74 l10 -12 v-19 a27 27 0 0 1 27 -27 z" fill="#141817" stroke="#3fd6b4" stroke-width="2.5"/>
+        <circle cx="276" cy="161" r="7.5" fill="#3fd6b4"/>
+        <line x1="276" y1="83" x2="276" y2="92" stroke="#3fd6b4" stroke-width="3" stroke-linecap="round"/>
+      </g>
+      <circle class="ping" cx="276" cy="125" r="44" fill="none" stroke="#3fd6b4" stroke-width="2"/>
+    </svg>
+  </div>
+  <div class="kicker reveal">02</div>
+  <h2 class="reveal">Nothing slips</h2>
+  <p class="blurb reveal">Deadlines, renewals and follow-ups watch themselves — and remind you before they bite.</p>
+</section>
+
+<!-- ============ 03 — the scan ============ -->
+<section class="promise" id="p3">
+  <div class="kicker reveal">03</div>
+  <h2 class="reveal">See it working before you commit</h2>
+  <p class="blurb reveal" style="margin-bottom:1.8rem">We start small, on one real task of yours. You watch it work, then decide.</p>
+  <div class="scene reveal" id="scanScene">
+    <svg viewBox="0 0 400 250" id="scanSvg">
+      <defs>
+        <linearGradient id="beamGrad" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#3fd6b4" stop-opacity="0"/>
+          <stop offset="50%" stop-color="#3fd6b4" stop-opacity="1"/>
+          <stop offset="100%" stop-color="#3fd6b4" stop-opacity="0"/>
+        </linearGradient>
+        <linearGradient id="beamGlow" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#3fd6b4" stop-opacity="0"/>
+          <stop offset="100%" stop-color="#3fd6b4" stop-opacity=".28"/>
+        </linearGradient>
+      </defs>
+      <rect x="30" y="18" width="340" height="214" rx="12" fill="#0f1211" stroke="#1c211f" stroke-width="2"/>
+      <rect class="done-glow" x="30" y="18" width="340" height="214" rx="12" fill="none" stroke="#3fd6b4" stroke-width="2.5"/>
+
+      <g class="row r1">
+        <line class="scrawl" x1="72" y1="62" x2="236" y2="62" stroke="#7d827e" stroke-width="3.4" stroke-linecap="round"/>
+        <rect class="clean" x="252" y="52" width="72" height="20" rx="5" fill="none" stroke="#3fd6b4" stroke-width="1.8"/>
+        <text class="clean" x="288" y="66" fill="#3fd6b4" font-size="11" font-family="Inter,sans-serif" text-anchor="middle">SORTED</text>
+        <path class="tick" d="M46 62 l6 6 l13 -15" fill="none" stroke="#3fd6b4" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
+      <g class="row r2">
+        <line class="scrawl" x1="72" y1="104" x2="222" y2="104" stroke="#7d827e" stroke-width="3.4" stroke-linecap="round"/>
+        <rect class="clean" x="252" y="94" width="72" height="20" rx="5" fill="none" stroke="#3fd6b4" stroke-width="1.8"/>
+        <text class="clean" x="288" y="108" fill="#3fd6b4" font-size="11" font-family="Inter,sans-serif" text-anchor="middle">FILED</text>
+        <path class="tick" d="M46 104 l6 6 l13 -15" fill="none" stroke="#3fd6b4" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
+      <g class="row r3">
+        <line class="scrawl" x1="72" y1="146" x2="244" y2="146" stroke="#7d827e" stroke-width="3.4" stroke-linecap="round"/>
+        <rect class="clean" x="252" y="136" width="72" height="20" rx="5" fill="none" stroke="#3fd6b4" stroke-width="1.8"/>
+        <text class="clean" x="288" y="150" fill="#3fd6b4" font-size="11" font-family="Inter,sans-serif" text-anchor="middle">DATED</text>
+        <path class="tick" d="M46 146 l6 6 l13 -15" fill="none" stroke="#3fd6b4" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
+      <g class="row r4">
+        <line class="scrawl" x1="72" y1="188" x2="212" y2="188" stroke="#7d827e" stroke-width="3.4" stroke-linecap="round"/>
+        <rect class="clean" x="252" y="178" width="72" height="20" rx="5" fill="none" stroke="#3fd6b4" stroke-width="1.8"/>
+        <text class="clean" x="288" y="192" fill="#3fd6b4" font-size="11" font-family="Inter,sans-serif" text-anchor="middle">SENT</text>
+        <path class="tick" d="M46 188 l6 6 l13 -15" fill="none" stroke="#3fd6b4" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
+
+      <g class="beam">
+        <rect x="32" y="14" width="336" height="26" fill="url(#beamGlow)"/>
+        <rect x="32" y="39" width="336" height="2.6" fill="url(#beamGrad)"/>
+      </g>
+    </svg>
+  </div>
+  <button class="replay" id="replayBtn">↻ &nbsp;replay</button>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section id="contact">
+  <div class="kicker reveal">READY WHEN YOU ARE</div>
+  <h2 class="reveal" style="margin-bottom:2rem">Let's find your first hour saved.</h2>
+  <a class="cta reveal" href="mailto:christianageno@gmail.com">Let's talk</a>
+  <p class="email reveal"><a href="mailto:christianageno@gmail.com">christianageno@gmail.com</a></p>
+</section>
+
+<footer>Lightwork AI</footer>
+
+<script>
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){
+    if(e.isIntersecting){e.target.classList.add('inview'); io.unobserve(e.target);}
+  })},{threshold:.4});
+  document.querySelectorAll('section').forEach(function(s){io.observe(s)});
+
+  var svg=document.getElementById('scanSvg'), replay=document.getElementById('replayBtn');
+  function play(){
+    svg.classList.remove('playing');
+    void svg.getBoundingClientRect();
+    requestAnimationFrame(function(){svg.classList.add('playing')});
+    setTimeout(function(){replay.classList.add('show')},4600);
+  }
+  var scanIO=new IntersectionObserver(function(es){es.forEach(function(e){
+    if(e.isIntersecting){play(); scanIO.unobserve(e.target);}
+  })},{threshold:.55});
+  scanIO.observe(document.getElementById('scanScene'));
+  replay.addEventListener('click',play);
+</script>
+</body>
+</html>
